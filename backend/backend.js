@@ -40,18 +40,17 @@ app.post("/addSong", async (req, res) => {
     await client.connect();
     const keys = Object.keys(req.body);
     const values = Object.values(req.body);
+    let tagsArr = [values[6], values[7], values[8]] // to make tags array
 
     const newDocument = {
-      id: parseInt(values[0]), // also "id": req.body.id,
-      title: values[1], // also "name": req.body.name,
-      price: values[2], // also "price": req.body.price,
-      description: values[3], // also "description": req.body.description,
-      category: values[4],
-      image: values[5], // also "imageUrl": req.body.imageUrl
-      rating: { // Create an object for the rating
-        rate: parseFloat(values[6].rate), // Convert rate to a float
-        count: parseInt(values[6].count) // Convert count to an integer
-      }
+      id: parseInt(values[0]),
+      artistName: values[3],
+      duration: values[2],
+      songTitle: values[1],
+      lyrics: values[4],
+      imageUrl: values[5],
+      tags: tagsArr,
+      
     };
 
     console.log(newDocument);
@@ -69,7 +68,7 @@ app.delete("/deleteSong/:id", async (req, res) => {
   try {
     const id = parseInt(req.params.id);
     await client.connect();
-    console.log("Product to delete :", id);
+    console.log("Song to delete :", id);
     const query = { id: id };
 
     // read data from robot to delete to send it to frontend

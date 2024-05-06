@@ -12,12 +12,6 @@ const ItemForm = () => {
     formState: { errors },
   } = useForm();
 
-  const validateRatingRate = (value) => {
-    if (value === "") return true; // Allow empty value
-    const rate = parseFloat(value);
-    return !isNaN(rate) && rate >= 0 && rate <= 5;
-  };
-
   const onSubmit = async (data) => {
     try {
       const response = await fetch("http://localhost:8081/addSong", {
@@ -28,9 +22,9 @@ const ItemForm = () => {
         body: JSON.stringify(data),
       });
       const result = await response.json();
-      console.log("Product added:", result);
+      console.log("Song added:", result);
     } catch (error) {
-      console.error("Error adding product:", error);
+      console.error("Error adding song:", error);
     }
   };
 
@@ -49,20 +43,20 @@ const ItemForm = () => {
           {errors.id && <span className="text-danger">ID is required</span>}
         </div>
         <div className="col-sm-7">
-          <label htmlFor="title" className="form-label">
-            Title:
+          <label htmlFor="artist" className="form-label">
+            Artist:
           </label>
           <input
             type="text"
             className="form-control"
-            {...register("title", { required: true })}
+            {...register("artist", { required: true })}
           />
-          {errors.title && (
-            <span className="text-danger">Title is required</span>
+          {errors.artist && (
+            <span className="text-danger">Artist is required</span>
           )}
         </div>
         <div className="col-sm-3">
-          <label htmlFor="price" className="form-label">
+          <label htmlFor="duration" className="form-label">
             Duration:
           </label>
           <input
@@ -77,7 +71,20 @@ const ItemForm = () => {
       </div>
 
       <div className="mb-3">
-        <label htmlFor="description" className="form-label">
+        <label htmlFor="title" className="form-label">
+          Song title:
+        </label>
+        <textarea
+          className="form-control"
+          {...register("title", { required: true })}
+        ></textarea>
+        {errors.title && (
+          <span className="text-danger">Song title is required</span>
+        )}
+      </div>
+
+      <div className="mb-3">
+        <label htmlFor="lyrics" className="form-label">
           Lyrics:
         </label>
         <textarea
@@ -85,7 +92,7 @@ const ItemForm = () => {
           {...register("lyrics", { required: false })}
         ></textarea>
         {errors.lyrics && (
-          <span className="text-danger">Description is required</span>
+          <span className="text-danger">Lyrics is required</span>
         )}
       </div>
 
@@ -99,7 +106,15 @@ const ItemForm = () => {
           {...register("imageUrl", { required: true })}
         />
         {errors.imageUrl && (
-          <span className="text-danger">Image URL is required. <a href="https://bendodson.com/projects/itunes-artwork-finder/index.html">Find Album artwork here.</a></span>
+          <span className="text-danger">
+            Image URL is required.{" "}
+            <a
+              href="https://bendodson.com/projects/itunes-artwork-finder/index.html"
+              target="_blank"
+            >
+              Find album artwork here.
+            </a>
+          </span>
         )}
       </div>
 
@@ -111,7 +126,7 @@ const ItemForm = () => {
           <input
             type="text"
             className="form-control"
-            {...register("tag1", { required: true })}
+            {...register("tags{0}", { required: true })}
           />
           {errors.tag1 && (
             <span className="text-danger">A tag is required.</span>
@@ -124,11 +139,9 @@ const ItemForm = () => {
           <input
             type="text"
             className="form-control"
-            {...register("tag2", { required: false})}
+            {...register("tags{1}", { required: false })}
           />
-          {errors.tag2 && (
-            <span className="text-danger">Message?</span>
-          )}
+          {errors.tag2 && <span className="text-danger">Message?</span>}
         </div>
         <div className="col-sm-4">
           <label htmlFor="tag3" className="form-label">
@@ -137,11 +150,9 @@ const ItemForm = () => {
           <input
             type="text"
             className="form-control"
-            {...register("tag3", {requred: false})}
+            {...register("tags{2}", { requred: false })}
           />
-          {errors.tag3 && (
-            <span className="text-danger">tag3</span>
-          )}
+          {errors.tag3 && <span className="text-danger">tag3</span>}
         </div>
       </div>
 
@@ -168,30 +179,27 @@ const UpdateForm = ({ onSubmit }) => {
   const submitUpdate = async (data) => {
     try {
       const id = parseInt(data.id);
-      const response = await fetch(
-        `http://localhost:8081/updateSong/${id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
+      const response = await fetch(`http://localhost:8081/updateSong/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title: data.title,
+          price: data.price,
+          description: data.description,
+          category: data.category,
+          image: data.image,
+          rating: {
+            rate: parseFloat(data["rating.rate"]),
+            count: parseInt(data["rating.count"]),
           },
-          body: JSON.stringify({
-            title: data.title,
-            price: data.price,
-            description: data.description,
-            category: data.category,
-            image: data.image,
-            rating: {
-              rate: parseFloat(data["rating.rate"]),
-              count: parseInt(data["rating.count"]),
-            },
-          }),
-        }
-      );
+        }),
+      });
       const result = await response.json();
-      console.log("Product updated:", result);
+      console.log("song updated:", result);
     } catch (error) {
-      console.error("Error updating product:", error);
+      console.error("Error updating song:", error);
     }
   };
 
@@ -343,26 +351,26 @@ const StudentCard = ({ name, email, date, professor, imageSrc }) => {
   );
 };
 
-const DeleteProduct = () => {
-  const [productId, setProductId] = useState("");
+const DeleteSong = () => {
+  const [songId, setSongId] = useState("");
 
   const handleDelete = async () => {
     try {
       const response = await fetch(
-        `http://localhost:8081/deleteSong/${productId}`,
+        `http://localhost:8081/deleteSong/${songId}`,
         {
           method: "DELETE",
         }
       );
-      const deletedProduct = await response.json();
-      console.log("Deleted product:", deletedProduct);
+      const deletedSong = await response.json();
+      console.log("Deleted song:", deletedSong);
     } catch (error) {
-      console.error("Error deleting product:", error);
+      console.error("Error deleting song:", error);
     }
   };
 
   const handleChange = (event) => {
-    setProductId(event.target.value);
+    setSongId(event.target.value);
   };
 
   return (
@@ -374,7 +382,7 @@ const DeleteProduct = () => {
         type="text"
         className="form-control"
         id="removeItemId"
-        value={productId}
+        value={songId}
         onChange={handleChange}
       />
       <button
@@ -396,50 +404,47 @@ const App = () => {
   };
 
   const ReadAccordionItem = () => {
-    const [products, setProducts] = useState([]);
+    const [songs, setSongs] = useState([]);
 
     useEffect(() => {
       const fetchData = async () => {
         try {
           const response = await fetch("http://localhost:8081/listSongs");
           const data = await response.json();
-          setProducts(data);
+          setSongs(data);
         } catch (error) {
-          console.error("Error fetching products:", error);
+          console.error("Error fetching songs:", error);
         }
       };
 
       if (openItem === 2) {
         fetchData();
       } else {
-        setProducts([]);
+        setSongs([]);
       }
     }, [openItem]);
 
     return (
       <div className="accordion-body d-flex flex-wrap justify-content-around">
         {openItem === 2 &&
-          products.map((song) => (
-            <div
-              key={song.id}
-              className="card m-2"
-              style={{ width: "15rem" }}
-            >
+          songs.map((song) => (
+            <div key={song.id} className="card m-2" style={{ width: "15rem" }}>
               <img
                 src={song.imageUrl}
                 className="card-img-top"
                 alt={song.title}
               />
               <div className="card-body">
-                <h5 className="card-title">{song.songTitle}</h5>
-                <p className="card-text small">{song.description}</p>
+                <h4 className="card-title">{song.songTitle}</h4>
+                <h6>{song.artistName}</h6>
+                <p className="card-text small">{song.lyrics}</p>
               </div>
               <ul className="list-group list-group-flush">
                 <li className="list-group-item">
                   <strong>Duration:</strong> {song.duration}
                 </li>
                 <li className="list-group-item">
-                  <strong>Tags:</strong> {song.tags}
+                  <strong>Tags:</strong> {song.tags[0]} {song.tags[1]} {song.tags[2]}
                 </li>
               </ul>
             </div>
@@ -511,7 +516,7 @@ const App = () => {
                 aria-expanded={openItem === 3 ? "true" : "false"}
                 aria-controls="collapseThree"
               >
-                <strong>U</strong>pdate: Modify information about a product
+                <strong>U</strong>pdate: Modify information about a song
               </button>
             </h2>
             <div
@@ -536,7 +541,7 @@ const App = () => {
                 aria-expanded={openItem === 4 ? "true" : "false"}
                 aria-controls="collapseFour"
               >
-                <strong>D</strong>elete: Remove a product from the Database
+                <strong>D</strong>elete: Remove a song from the Database
               </button>
             </h2>
             <div
@@ -547,7 +552,7 @@ const App = () => {
               aria-labelledby="headingFour"
             >
               <div className="accordion-body">
-                <DeleteProduct />
+                <DeleteSong />
               </div>
             </div>
           </div>
@@ -577,7 +582,8 @@ const App = () => {
                     <h3>Com S 319: Construction of User Interfaces, Team 71</h3>
                     <h4>Final Project (Work in Progress)</h4>
                     <p>
-                      Are we done yet? I want to go back to scripting and OOP and algorithms and such
+                      Are we done yet? I want to go back to scripting and OOP
+                      and algorithms and such
                     </p>
                     <div className="row row-cols-1 row-cols-sm-2 g-3">
                       <StudentCard

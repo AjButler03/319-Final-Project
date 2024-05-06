@@ -1,6 +1,6 @@
 [{
     "id": 0,
-    "artistName": ["Martin O'Donnell", "Michael Salvatori"],
+    "artistName": "Martin O'Donnell",
     "songTitle": "Halo Theme Mjolnir Mix",
     "lyrics": "",
     "duration": "4:11",
@@ -9,7 +9,7 @@
 }, 
 {
     "id": 1,
-    "artistName": ["Twenty One Pilots"],
+    "artistName": "Twenty One Pilots",
     "songTitle": "Level of Concern",
     "lyrics": "",
     "duration": "3:40",
@@ -18,7 +18,7 @@
 }, 
 {
     "id": 2,
-    "artistName": ["Post Malone", "Swae Lee"],
+    "artistName": "Post Malone",
     "songTitle": "Sunflower",
     "lyrics": "",
     "duration": "2:38",
@@ -27,7 +27,7 @@
 }, 
 {
     "id": 3,
-    "artistName": ["Lord Huron"],
+    "artistName": "Lord Huron",
     "songTitle": "Twenty Long Years",
     "lyrics": "",
     "duration": "4:50",
@@ -36,7 +36,7 @@
 }, 
 {
     "id": 4,
-    "artistName": ["John Denver"],
+    "artistName": "John Denver",
     "songTitle": "Take Me Home, Country Roads - Original Version",
     "lyrics": "",
     "duration": "3:10",
@@ -45,7 +45,7 @@
 },
 {
     "id": 5,
-    "artistName": ["Don McLean"],
+    "artistName": "Don McLean",
     "songTitle": "American Pie",
     "lyrics": "",
     "duration": "8:36",
@@ -54,7 +54,7 @@
 },
 {
     "id": 6,
-    "artistName": ["Queen"],
+    "artistName": "Queen",
     "songTitle": "Bohemian Rhapsody",
     "lyrics": "",
     "duration": "5:55",
@@ -63,7 +63,7 @@
 },
 {
     "id": 7,
-    "artistName": ["Flo Rida"],
+    "artistName": "Flo Rida",
     "songTitle": "Good Feeling",
     "lyrics": "",
     "duration": "4:08",
@@ -72,7 +72,7 @@
 },
 {
     "id": 8,
-    "artistName": ["fun.", "Janelle Monae"],
+    "artistName": "fun.",
     "songTitle": "We are Young (feat. Janelle Monae)",
     "lyrics": "",
     "duration": "4:10",
@@ -81,7 +81,7 @@
 },
 {
     "id": 9,
-    "artistName": ["Bo Burnham"],
+    "artistName": "Bo Burnham",
     "songTitle": "Goodbye",
     "lyrics": "",
     "duration": "4:09",
