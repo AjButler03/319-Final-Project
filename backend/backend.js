@@ -40,16 +40,15 @@ app.post("/addSong", async (req, res) => {
     await client.connect();
     const keys = Object.keys(req.body);
     const values = Object.values(req.body);
-    let tagsArr = [values[6], values[7], values[8]] // to make tags array
 
     const newDocument = {
       id: parseInt(values[0]),
-      artistName: values[3],
+      artistName: values[1],
       duration: values[2],
-      songTitle: values[1],
+      songTitle: values[3],
       lyrics: values[4],
       imageUrl: values[5],
-      tags: tagsArr,
+      tags: [values[6], values[7], values[8]],
       
     };
 
@@ -71,13 +70,13 @@ app.delete("/deleteSong/:id", async (req, res) => {
     console.log("Song to delete :", id);
     const query = { id: id };
 
-    // read data from robot to delete to send it to frontend
-    const robotDeleted = await db.collection("allSongs").findOne(query);
+    // read data from song to delete to send it to frontend
+    const songDeleted = await db.collection("allSongs").findOne(query);
 
     // delete
     const results = await db.collection("allSongs").deleteOne(query);
     res.status(200);
-    res.send(robotDeleted);
+    res.send(songDeleted);
     res.send(results);
   } catch (error) {
     console.error("Error deleting product:", error);
@@ -96,12 +95,12 @@ app.put("/updateSong/:id", async (req, res) => {
   const existingProduct = await db.collection("allSongs").findOne(query);
   const updateData = {
     $set: {
-      title: req.body.title,
-      price: req.body.price,
-      description: req.body.description,
-      category: req.body.category,
-      image: req.body.image,
-      rating: req.body.rating
+      artistName: req.body.artistName,
+      songTitle: req.body.songTitle,
+      duration: req.body.duration,
+      lyrics: req.body.lyrics,
+      tags: req.body.tags,
+      imageUrl: req.body.imageUrl,
     },
   };
 
@@ -114,7 +113,6 @@ app.put("/updateSong/:id", async (req, res) => {
     return res.status(404).send({ message: "Song not found" });
   }
   res.send(results);
-  // res.send(robotUpdated);
 });
 
 app.get("/", async (req, res) => {});

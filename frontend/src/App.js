@@ -126,7 +126,7 @@ const ItemForm = () => {
           <input
             type="text"
             className="form-control"
-            {...register("tags{0}", { required: true })}
+            {...register("tag1", { required: true })}
           />
           {errors.tag1 && (
             <span className="text-danger">A tag is required.</span>
@@ -139,7 +139,7 @@ const ItemForm = () => {
           <input
             type="text"
             className="form-control"
-            {...register("tags{1}", { required: false })}
+            {...register("tag2", { required: false })}
           />
           {errors.tag2 && <span className="text-danger">Message?</span>}
         </div>
@@ -150,14 +150,14 @@ const ItemForm = () => {
           <input
             type="text"
             className="form-control"
-            {...register("tags{2}", { requred: false })}
+            {...register("tag3", { requred: false })}
           />
           {errors.tag3 && <span className="text-danger">tag3</span>}
         </div>
       </div>
 
       <button type="submit" className="btn btn-primary">
-        Submit Item
+        Add Song
       </button>
     </form>
   );
@@ -170,12 +170,6 @@ const UpdateForm = ({ onSubmit }) => {
     formState: { errors },
   } = useForm();
 
-  const validateRatingRate = (value) => {
-    if (value === "") return true; // Allow empty value
-    const rate = parseFloat(value);
-    return !isNaN(rate) && rate >= 0 && rate <= 5;
-  };
-
   const submitUpdate = async (data) => {
     try {
       const id = parseInt(data.id);
@@ -185,15 +179,12 @@ const UpdateForm = ({ onSubmit }) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          title: data.title,
-          price: data.price,
-          description: data.description,
-          category: data.category,
-          image: data.image,
-          rating: {
-            rate: parseFloat(data["rating.rate"]),
-            count: parseInt(data["rating.count"]),
-          },
+          artistName: data.artist,
+          duration: data.duration,
+          songTitle: data.title,
+          lyrics: data.lyrics,
+          imageUrl: data.imageUrl,
+          tags: [data.tag1, data.tag2, data.tag3],
         }),
       });
       const result = await response.json();
@@ -210,104 +201,129 @@ const UpdateForm = ({ onSubmit }) => {
           <label htmlFor="id" className="form-label">
             ID:
           </label>
-          <input type="text" className="form-control" {...register("id")} />
-          {errors.id && <span className="text-danger">Id is required</span>}
+          <input
+            type="text"
+            className="form-control"
+            {...register("id", { required: true })}
+          />
+          {errors.id && <span className="text-danger">ID is required</span>}
         </div>
         <div className="col-sm-7">
-          <label htmlFor="title" className="form-label">
-            New Title:
+          <label htmlFor="artist" className="form-label">
+          Updated Artist:
           </label>
           <input
             type="text"
             className="form-control"
-            {...register("title", { required: true })}
+            {...register("artist", { required: true })}
           />
-          {errors.title && (
-            <span className="text-danger">Title is required</span>
+          {errors.artist && (
+            <span className="text-danger">Artist is required</span>
           )}
         </div>
         <div className="col-sm-3">
-          <label htmlFor="price" className="form-label">
-            New Price:
+          <label htmlFor="duration" className="form-label">
+          Updated Duration:
           </label>
           <input
             type="text"
             className="form-control"
-            {...register("price", { required: true })}
+            {...register("duration", { required: true })}
           />
-          {errors.price && (
-            <span className="text-danger">Price is required</span>
+          {errors.duration && (
+            <span className="text-danger">Song duration is required</span>
           )}
         </div>
       </div>
 
       <div className="mb-3">
-        <label htmlFor="description" className="form-label">
-          New Description:
+        <label htmlFor="title" className="form-label">
+          Song title:
         </label>
         <textarea
           className="form-control"
-          {...register("description", { required: true })}
+          {...register("title", { required: true })}
         ></textarea>
-        {errors.description && (
-          <span className="text-danger">Description is required</span>
+        {errors.title && (
+          <span className="text-danger">Song title is required</span>
         )}
       </div>
 
       <div className="mb-3">
-        <label htmlFor="category" className="form-label">
-          New Category:
+        <label htmlFor="lyrics" className="form-label">
+          Lyrics:
+        </label>
+        <textarea
+          className="form-control"
+          {...register("lyrics", { required: false })}
+        ></textarea>
+        {errors.lyrics && (
+          <span className="text-danger">Lyrics is required</span>
+        )}
+      </div>
+
+      <div className="mb-3">
+        <label htmlFor="imageUrl" className="form-label">
+          Updated Image URL:
         </label>
         <input
           type="text"
           className="form-control"
-          {...register("category", { required: true })}
+          {...register("imageUrl", { required: true })}
         />
-        {errors.category && (
-          <span className="text-danger">Category is required</span>
+        {errors.imageUrl && (
+          <span className="text-danger">
+            Image URL is required.{" "}
+            <a
+              href="https://bendodson.com/projects/itunes-artwork-finder/index.html"
+              target="_blank"
+            >
+              Find album artwork here.
+            </a>
+          </span>
         )}
       </div>
 
       <div className="mb-3 row">
-        <div className="col-sm-8">
-          <label htmlFor="imageUrl" className="form-label">
-            New Image URL:
-          </label>
-          <input type="text" className="form-control" {...register("image")} />
-          {errors.imageUrl && (
-            <span className="text-danger">Image URL is required</span>
-          )}
-        </div>
-        <div className="col-sm-2">
-          <label htmlFor="ratingRate" className="form-label">
-            New Rating Rate:
+        <div className="col-sm-4">
+          <label htmlFor="tag1" className="form-label">
+          Updated Tag 1:
           </label>
           <input
             type="text"
             className="form-control"
-            {...register("rating.rate", { validate: validateRatingRate })}
+            {...register("tag1", { required: true })}
           />
-          {errors["rating.rate"] && (
-            <span className="text-danger">Rating must be between 0 and 5</span>
+          {errors.tag1 && (
+            <span className="text-danger">A tag is required.</span>
           )}
         </div>
-        <div className="col-sm-2">
-          <label htmlFor="ratingCount" className="form-label">
-            New Rating Count:
+        <div className="col-sm-4">
+          <label htmlFor="tag2" className="form-label">
+          Updated Tag 2:
           </label>
           <input
             type="text"
             className="form-control"
-            {...register("rating.count")}
+            {...register("tag2", { required: false })}
           />
-          {errors["rating.count"] && (
-            <span className="text-danger">Rating is required</span>
-          )}
+          {errors.tag2 && <span className="text-danger">Message?</span>}
+        </div>
+        <div className="col-sm-4">
+          <label htmlFor="tag3" className="form-label">
+          Updated  Tag 3:
+          </label>
+          <input
+            type="text"
+            className="form-control"
+            {...register("tag3", { requred: false })}
+          />
+          {errors.tag3 && <span className="text-danger">tag3</span>}
         </div>
       </div>
 
       <button type="submit" className="btn btn-primary">
-        Update
+        Submit Update
       </button>
     </form>
   );
@@ -376,7 +392,7 @@ const DeleteSong = () => {
   return (
     <div className="mb-3">
       <label htmlFor="removeItemId" className="form-label">
-        Remove item with ID:
+        Remove song with ID:
       </label>
       <input
         type="text"
@@ -390,7 +406,7 @@ const DeleteSong = () => {
         className="btn btn-danger mt-2"
         onClick={handleDelete}
       >
-        Delete
+        Delete song
       </button>
     </div>
   );
@@ -444,7 +460,8 @@ const App = () => {
                   <strong>Duration:</strong> {song.duration}
                 </li>
                 <li className="list-group-item">
-                  <strong>Tags:</strong> {song.tags[0]} {song.tags[1]} {song.tags[2]}
+                  <strong>Tags:</strong> {song.tags[0]} {song.tags[1]}{" "}
+                  {song.tags[2]}
                 </li>
               </ul>
             </div>
