@@ -412,17 +412,16 @@ const DeleteSong = () => {
   );
 };
 
-//Search by filters, located udner header
 const FilterBar = ({ filterSongs }) => {
   const filterTags = [
-    "all",
-    "rock",
-    "country",
-    "pop",
-    "rap",
-    "folk",
-    "indie",
-    "ost",
+    "All",
+    "Rock",
+    "Country",
+    "Pop",
+    "Rap",
+    "Folk",
+    "Indie",
+    "OST",
   ];
 
   const handleClick = (tag) => {
@@ -430,7 +429,7 @@ const FilterBar = ({ filterSongs }) => {
   };
 
   return (
-    <div className="bg-dark text-white">
+    <div className="bg-white text-black">
       <div className="container d-flex justify-content-between align-items-center">
         <div className="vr vr-blurry" />
         {filterTags.map((tag, index) => (
@@ -438,14 +437,14 @@ const FilterBar = ({ filterSongs }) => {
             {index !== 0 && <div className="vr vr-blurry" />}
             <button
               type="button"
-              className="btn btn-outline-light border-0 px-2 mx-1 my-1 flex-grow-1"
+              className="btn btn-outline-dark border-0 px-2 mx-1 my-1 flex-grow-1"
               onClick={() => handleClick(tag.toLowerCase())}
             >
               {tag}
             </button>
           </React.Fragment>
         ))}
-        <div className="vr vr-blurry" />
+        <div className="vr vr-blurry"/>
       </div>
     </div>
   );
@@ -460,11 +459,11 @@ const App = () => {
 
   const ReadAccordionItem = () => {
     const [songs, setSongs] = useState([]);
-    const [filteredSongs, setFilteredSongs] = useState([songs]); // used to store filtered songs
+    const [filteredSongs, setFilteredSongs] = useState(songs); // used to store filtered songs
 
     // filter songs by tag
     const filterSongs = (tag) => {
-      if (tag === "all") {
+      if (tag === "all" || tag === null) {
         setFilteredSongs(songs);
       } else {
         const filtered = songs.filter((song) => song.tags.includes(tag));
@@ -517,10 +516,8 @@ const App = () => {
                     <strong>Duration:</strong> {song.duration}
                   </li>
                   <li className="list-group-item">
-                    <strong>Tags:</strong>
-                    {/* {song.tags[0]} {song.tags[1]}
-                    {song.tags[2]} */}
-                    {song.tags}
+                    <strong>Tags: </strong>
+                    {song.tags[0]} {song.tags[1]} {song.tags[2]}
                   </li>
                 </ul>
               </div>
@@ -568,7 +565,7 @@ const App = () => {
                 aria-expanded={openItem === 2 ? "true" : "false"}
                 aria-controls="collapseTwo"
               >
-                <strong>R</strong>ead: Show all items
+                <strong>R</strong>ead: Show items
               </button>
             </h2>
             <div
