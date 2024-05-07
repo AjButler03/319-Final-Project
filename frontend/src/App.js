@@ -351,11 +351,6 @@ const StudentCard = ({ name, email, date, professor, imageSrc }) => {
             </li>
             <li>
               <p>
-                <strong>Date:</strong> {date}
-              </p>
-            </li>
-            <li>
-              <p>
                 <strong>Professor name:</strong> {professor}
               </p>
             </li>
@@ -718,9 +713,9 @@ const App = () => {
         <div>
           <div className="album py-5">
             <div className="container">
-              <h3>Com S 319: Construction of User Interfaces, Team 71</h3>
+              <h3>Com S 319: Construction of User Interfaces, Team 71, Spring 2024</h3>
 
-              <h4>Final Project</h4>
+              <h4>Final Project, 7-5-2024</h4>
 
               <hr></hr>
 
@@ -728,14 +723,12 @@ const App = () => {
                 <StudentCard
                   name="Andrew Butler"
                   email="ajbutler@iastate.edu"
-                  date="27-4-2024"
                   professor="Ali Jannesari"
                   imageSrc="https://raw.githubusercontent.com/AjButler03/CS319-Assign-01/main/personal%20images/andrew.JPG"
                 />
                 <StudentCard
                   name="Nhat Bui"
                   email="nbui@iastate.edu"
-                  date="27-4-2024"
                   professor="Ali Jannesari"
                   imageSrc="https://raw.githubusercontent.com/AjButler03/CS319-Assign-01/main/personal%20images/nat.jpg"
                 />
