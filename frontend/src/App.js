@@ -421,6 +421,7 @@ const FilterBar = ({ filterSongs }) => {
     "Folk",
     "Indie",
     "OST",
+    "Classic",
   ];
 
   const handleClick = (tag) => {
@@ -602,7 +603,7 @@ const App = () => {
                 <ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                   <li><button className="btn btn-outline-dark border-0 px-2 text-white" onClick={() => setViewer('all')}>Home</button></li>
                   <li><button className="btn btn-outline-dark border-0 px-2 text-white" onClick={() => setViewer('genres')}>By Genres</button></li>
-                  <li><button className="btn btn-outline-dark border-0 px-2 text-white" onClick={() => setViewer('edit')}>Edit Songs</button></li>
+                  <li><button className="btn btn-outline-dark border-0 px-2 text-white" onClick={() => setViewer('edit')}>Add/Edit/delete Songs</button></li>
                   <li><button className="btn btn-outline-dark border-0 px-2 text-white" onClick={() => setViewer('about')}>About</button></li>
                 </ul>
               </div>
@@ -620,13 +621,13 @@ const App = () => {
           <div className="accordion-item">
             <h2 className="accordion-header" id="headingOne">
               <button
-                className="accordion-button"
+                className="accordion-button bg-dark text-light"
                 type="button"
                 onClick={() => toggleCollapse(1)}
                 aria-expanded={openItem === 1 ? "true" : "false"}
                 aria-controls="collapseOne"
               >
-                <strong>C</strong>reate: Add item to Database
+                <strong>C</strong>reate: Add song to database
               </button>
             </h2>
             <div
@@ -644,7 +645,7 @@ const App = () => {
           <div className="accordion-item">
             <h2 className="accordion-header" id="headingThree">
               <button
-                className="accordion-button"
+                className="accordion-button bg-dark text-light"
                 type="button"
                 onClick={() => toggleCollapse(2)}
                 aria-expanded={openItem === 2 ? "true" : "false"}
@@ -668,7 +669,7 @@ const App = () => {
           <div className="accordion-item">
             <h2 className="accordion-header" id="headingFour">
               <button
-                className="accordion-button"
+                className="accordion-button bg-dark text-light"
                 type="button"
                 onClick={() => toggleCollapse(3)}
                 aria-expanded={openItem === 3 ? "true" : "false"}
