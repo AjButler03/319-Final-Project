@@ -210,7 +210,7 @@ const UpdateForm = ({ onSubmit }) => {
         </div>
         <div className="col-sm-7">
           <label htmlFor="artist" className="form-label">
-          Updated Artist:
+            Updated Artist:
           </label>
           <input
             type="text"
@@ -223,7 +223,7 @@ const UpdateForm = ({ onSubmit }) => {
         </div>
         <div className="col-sm-3">
           <label htmlFor="duration" className="form-label">
-          Updated Duration:
+            Updated Duration:
           </label>
           <input
             type="text"
@@ -287,7 +287,7 @@ const UpdateForm = ({ onSubmit }) => {
       <div className="mb-3 row">
         <div className="col-sm-4">
           <label htmlFor="tag1" className="form-label">
-          Updated Tag 1:
+            Updated Tag 1:
           </label>
           <input
             type="text"
@@ -300,7 +300,7 @@ const UpdateForm = ({ onSubmit }) => {
         </div>
         <div className="col-sm-4">
           <label htmlFor="tag2" className="form-label">
-          Updated Tag 2:
+            Updated Tag 2:
           </label>
           <input
             type="text"
@@ -311,7 +311,7 @@ const UpdateForm = ({ onSubmit }) => {
         </div>
         <div className="col-sm-4">
           <label htmlFor="tag3" className="form-label">
-          Updated  Tag 3:
+            Updated Tag 3:
           </label>
           <input
             type="text"
@@ -412,6 +412,45 @@ const DeleteSong = () => {
   );
 };
 
+//Search by filters, located udner header
+const FilterBar = ({ filterSongs }) => {
+  const filterTags = [
+    "all",
+    "rock",
+    "country",
+    "pop",
+    "rap",
+    "folk",
+    "indie",
+    "ost",
+  ];
+
+  const handleClick = (tag) => {
+    filterSongs(tag);
+  };
+
+  return (
+    <div className="bg-dark text-white">
+      <div className="container d-flex justify-content-between align-items-center">
+        <div className="vr vr-blurry" />
+        {filterTags.map((tag, index) => (
+          <React.Fragment key={index}>
+            {index !== 0 && <div className="vr vr-blurry" />}
+            <button
+              type="button"
+              className="btn btn-outline-light border-0 px-2 mx-1 my-1 flex-grow-1"
+              onClick={() => handleClick(tag.toLowerCase())}
+            >
+              {tag}
+            </button>
+          </React.Fragment>
+        ))}
+        <div className="vr vr-blurry" />
+      </div>
+    </div>
+  );
+};
+
 const App = () => {
   const [openItem, setOpenItem] = useState(null);
 
@@ -421,6 +460,19 @@ const App = () => {
 
   const ReadAccordionItem = () => {
     const [songs, setSongs] = useState([]);
+    const [filteredSongs, setFilteredSongs] = useState([songs]); // used to store filtered songs
+
+    // filter songs by tag
+    const filterSongs = (tag) => {
+      if (tag === "all") {
+        setFilteredSongs(songs);
+      } else {
+        const filtered = songs.filter(
+          (song) => song.tags.includes(tag)
+        );
+        setFilteredSongs(filtered);
+      }
+    };
 
     useEffect(() => {
       const fetchData = async () => {
@@ -442,8 +494,12 @@ const App = () => {
 
     return (
       <div className="accordion-body d-flex flex-wrap justify-content-around">
+        <div>
+          <FilterBar
+          filterSongs={filterSongs}/>
+        </div>
         {openItem === 2 &&
-          songs.map((song) => (
+          filteredSongs.map((song) => (
             <div key={song.id} className="card m-2" style={{ width: "15rem" }}>
               <img
                 src={song.imageUrl}
@@ -460,8 +516,8 @@ const App = () => {
                   <strong>Duration:</strong> {song.duration}
                 </li>
                 <li className="list-group-item">
-                  <strong>Tags:</strong> {song.tags[0]} {song.tags[1]}{" "}
-                  {song.tags[2]}
+                  {/* <strong>Tags:</strong> {song.tags[0]} {song.tags[1]}{" "}
+                  {song.tags[2]} */} // commented out for now; seems to be broken for some reason
                 </li>
               </ul>
             </div>
