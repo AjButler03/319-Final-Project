@@ -467,10 +467,9 @@ const App = () => {
       if (tag === "all") {
         setFilteredSongs(songs);
       } else {
-        const filtered = songs.filter(
-          (song) => song.tags.includes(tag)
-        );
+        const filtered = songs.filter((song) => song.tags.includes(tag));
         setFilteredSongs(filtered);
+        console.log(filteredSongs);
       }
     };
 
@@ -493,35 +492,40 @@ const App = () => {
     }, [openItem]);
 
     return (
-      <div className="accordion-body d-flex flex-wrap justify-content-around">
-        <div>
-          <FilterBar
-          filterSongs={filterSongs}/>
-        </div>
-        {openItem === 2 &&
-          filteredSongs.map((song) => (
-            <div key={song.id} className="card m-2" style={{ width: "15rem" }}>
-              <img
-                src={song.imageUrl}
-                className="card-img-top"
-                alt={song.title}
-              />
-              <div className="card-body">
-                <h4 className="card-title">{song.songTitle}</h4>
-                <h6>{song.artistName}</h6>
-                <p className="card-text small">{song.lyrics}</p>
+      <div>
+        <FilterBar filterSongs={filterSongs} />
+        <div className="accordion-body d-flex flex-wrap justify-content-around">
+          {openItem === 2 &&
+            filteredSongs.map((song) => (
+              <div
+                key={song.id}
+                className="card m-2"
+                style={{ width: "15rem" }}
+              >
+                <img
+                  src={song.imageUrl}
+                  className="card-img-top"
+                  alt={song.title}
+                />
+                <div className="card-body">
+                  <h4 className="card-title">{song.songTitle}</h4>
+                  <h6>{song.artistName}</h6>
+                  <p className="card-text small">{song.lyrics}</p>
+                </div>
+                <ul className="list-group list-group-flush">
+                  <li className="list-group-item">
+                    <strong>Duration:</strong> {song.duration}
+                  </li>
+                  <li className="list-group-item">
+                    <strong>Tags:</strong>
+                    {/* {song.tags[0]} {song.tags[1]}
+                    {song.tags[2]} */}
+                    {song.tags}
+                  </li>
+                </ul>
               </div>
-              <ul className="list-group list-group-flush">
-                <li className="list-group-item">
-                  <strong>Duration:</strong> {song.duration}
-                </li>
-                <li className="list-group-item">
-                  {/* <strong>Tags:</strong> {song.tags[0]} {song.tags[1]}{" "}
-                  {song.tags[2]} */} // commented out for now; seems to be broken for some reason
-                </li>
-              </ul>
-            </div>
-          ))}
+            ))}
+        </div>
       </div>
     );
   };
