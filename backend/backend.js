@@ -23,6 +23,67 @@ app.get("/listSongs", async (req, res) => {
   res.send(results);
 });
 
+app.get("/listGenres", async (req, res) => {
+  try {
+    await client.connect();
+    console.log("Node connected successfully to MongoDB");
+
+    // Retrieve all songs from the database
+    const query = {};
+    const songs = await db.collection("allSongs").find(query).toArray();
+
+    // Extract all genres from the songs
+    const allGenres = songs.reduce((acc, song) => {
+      return [...acc, ...song.tags];
+    }, []);
+
+    // Create a Set to ensure uniqueness of genres
+    const uniqueGenres = [...new Set(allGenres)];
+
+    res.status(200).json(uniqueGenres);
+  } catch (error) {
+    console.error("Error occurred:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+
+app.get("/listSongsByGenres", async (req, res) => {
+  try {
+    await client.connect();
+    console.log("Node connected successfully to MongoDB");
+
+    // Aggregate to group songs by genres
+    const pipeline = [
+      {
+        $unwind: "$tags" // Split array of tags into multiple documents
+      },
+      {
+        $group: {
+          _id: "$tags", // Group by each genre
+          songs: {
+            $push: {
+              id: "$_id",
+              artistName: "$artistName",
+              songTitle: "$songTitle",
+              duration: "$duration",
+              imageUrl: "$imageUrl"
+            }
+          }
+        }
+      }
+    ];
+
+    // Execute aggregation pipeline
+    const genresWithSongs = await db.collection("allSongs").aggregate(pipeline).toArray();
+
+    res.status(200).json(genresWithSongs);
+  } catch (error) {
+    console.error("Error occurred:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 app.get("/:id", async (req, res) => {
   const productid = Number(req.params.id);
   console.log("Song to find by ID :", productid);

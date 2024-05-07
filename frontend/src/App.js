@@ -412,6 +412,30 @@ const DeleteSong = () => {
   );
 };
 
+const Header = () =>{
+  return (
+    <header className="p-3 bg-dark text-white">
+    <div className="container">
+      <div className="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+        <div className="d-flex align-items-center mb-2 mb-lg-0 text-white">
+          {/* Your logo or site name */}
+        </div>
+
+        <ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+          <li><button className="btn btn-link nav-link px-2 text-white" >Home</button></li>
+
+          <li><button className="btn btn-link nav-link px-2 text-white" >History</button></li>
+          <li><button className="btn btn-link nav-link px-2 text-white" >Edit Songs</button></li>
+        </ul>
+      </div>
+    </div>
+    
+
+
+  </header>
+  );
+}
+
 const FilterBar = ({ filterSongs }) => {
   const filterTags = [
     "All",
@@ -528,161 +552,163 @@ const App = () => {
   };
 
   return (
-    <div style={{ height: "100vh", display: "flex", flexDirection: "column" }}>
-      <div style={{ flex: 1 }}>
-        <div className="accordion" id="accordionExample">
-          <div className="accordion-item">
-            <h2 className="accordion-header" id="headingOne">
-              <button
-                className="accordion-button"
-                type="button"
-                onClick={() => toggleCollapse(1)}
-                aria-expanded={openItem === 1 ? "true" : "false"}
-                aria-controls="collapseOne"
-              >
-                <strong>C</strong>reate: Add item to Database
-              </button>
-            </h2>
-            <div
-              id="collapseOne"
-              className={`accordion-collapse collapse ${
-                openItem === 1 ? "show" : ""
-              }`}
-              aria-labelledby="headingOne"
-            >
-              <div className="accordion-body">
-                <ItemForm />
-              </div>
-            </div>
-          </div>
 
-          <div className="accordion-item">
-            <h2 className="accordion-header" id="headingTwo">
-              <button
-                className="accordion-button"
-                type="button"
-                onClick={() => toggleCollapse(2)}
-                aria-expanded={openItem === 2 ? "true" : "false"}
-                aria-controls="collapseTwo"
-              >
-                <strong>R</strong>ead: Show items
-              </button>
-            </h2>
-            <div
-              id="collapseTwo"
-              className={`accordion-collapse collapse ${
-                openItem === 2 ? "show" : ""
-              }`}
-              aria-labelledby="headingTwo"
-            >
-              <div className="accordion-body">
-                <ReadAccordionItem />
-              </div>
-            </div>
-          </div>
+    <div><Header/></div>
+    // <div style={{ height: "100vh", display: "flex", flexDirection: "column" }}>
+    //   <div style={{ flex: 1 }}>
+    //     <div className="accordion" id="accordionExample">
+    //       <div className="accordion-item">
+    //         <h2 className="accordion-header" id="headingOne">
+    //           <button
+    //             className="accordion-button"
+    //             type="button"
+    //             onClick={() => toggleCollapse(1)}
+    //             aria-expanded={openItem === 1 ? "true" : "false"}
+    //             aria-controls="collapseOne"
+    //           >
+    //             <strong>C</strong>reate: Add item to Database
+    //           </button>
+    //         </h2>
+    //         <div
+    //           id="collapseOne"
+    //           className={`accordion-collapse collapse ${
+    //             openItem === 1 ? "show" : ""
+    //           }`}
+    //           aria-labelledby="headingOne"
+    //         >
+    //           <div className="accordion-body">
+    //             <ItemForm />
+    //           </div>
+    //         </div>
+    //       </div>
 
-          <div className="accordion-item">
-            <h2 className="accordion-header" id="headingThree">
-              <button
-                className="accordion-button"
-                type="button"
-                onClick={() => toggleCollapse(3)}
-                aria-expanded={openItem === 3 ? "true" : "false"}
-                aria-controls="collapseThree"
-              >
-                <strong>U</strong>pdate: Modify information about a song
-              </button>
-            </h2>
-            <div
-              id="collapseThree"
-              className={`accordion-collapse collapse ${
-                openItem === 3 ? "show" : ""
-              }`}
-              aria-labelledby="headingThree"
-            >
-              <div className="accordion-body">
-                <UpdateForm />
-              </div>
-            </div>
-          </div>
+    //       <div className="accordion-item">
+    //         <h2 className="accordion-header" id="headingTwo">
+    //           <button
+    //             className="accordion-button"
+    //             type="button"
+    //             onClick={() => toggleCollapse(2)}
+    //             aria-expanded={openItem === 2 ? "true" : "false"}
+    //             aria-controls="collapseTwo"
+    //           >
+    //             <strong>R</strong>ead: Show items
+    //           </button>
+    //         </h2>
+    //         <div
+    //           id="collapseTwo"
+    //           className={`accordion-collapse collapse ${
+    //             openItem === 2 ? "show" : ""
+    //           }`}
+    //           aria-labelledby="headingTwo"
+    //         >
+    //           <div className="accordion-body">
+    //             <ReadAccordionItem />
+    //           </div>
+    //         </div>
+    //       </div>
 
-          <div className="accordion-item">
-            <h2 className="accordion-header" id="headingFour">
-              <button
-                className="accordion-button"
-                type="button"
-                onClick={() => toggleCollapse(4)}
-                aria-expanded={openItem === 4 ? "true" : "false"}
-                aria-controls="collapseFour"
-              >
-                <strong>D</strong>elete: Remove a song from the Database
-              </button>
-            </h2>
-            <div
-              id="collapseFour"
-              className={`accordion-collapse collapse ${
-                openItem === 4 ? "show" : ""
-              }`}
-              aria-labelledby="headingFour"
-            >
-              <div className="accordion-body">
-                <DeleteSong />
-              </div>
-            </div>
-          </div>
+    //       <div className="accordion-item">
+    //         <h2 className="accordion-header" id="headingThree">
+    //           <button
+    //             className="accordion-button"
+    //             type="button"
+    //             onClick={() => toggleCollapse(3)}
+    //             aria-expanded={openItem === 3 ? "true" : "false"}
+    //             aria-controls="collapseThree"
+    //           >
+    //             <strong>U</strong>pdate: Modify information about a song
+    //           </button>
+    //         </h2>
+    //         <div
+    //           id="collapseThree"
+    //           className={`accordion-collapse collapse ${
+    //             openItem === 3 ? "show" : ""
+    //           }`}
+    //           aria-labelledby="headingThree"
+    //         >
+    //           <div className="accordion-body">
+    //             <UpdateForm />
+    //           </div>
+    //         </div>
+    //       </div>
 
-          <div className="accordion-item">
-            <h2 className="accordion-header" id="headingFive">
-              <button
-                className="accordion-button"
-                type="button"
-                onClick={() => toggleCollapse(5)}
-                aria-expanded={openItem === 5 ? "true" : "false"}
-                aria-controls="collapseFive"
-              >
-                About: Student info
-              </button>
-            </h2>
-            <div
-              id="collapseFive"
-              className={`accordion-collapse collapse ${
-                openItem === 5 ? "show" : ""
-              }`}
-              aria-labelledby="headingFive"
-            >
-              <div className="accordion-body">
-                <div className="album py-5">
-                  <div className="container">
-                    <h3>Com S 319: Construction of User Interfaces, Team 71</h3>
-                    <h4>Final Project (Work in Progress)</h4>
-                    <p>
-                      Are we done yet? I want to go back to scripting and OOP
-                      and algorithms and such
-                    </p>
-                    <div className="row row-cols-1 row-cols-sm-2 g-3">
-                      <StudentCard
-                        name="Andrew Butler"
-                        email="ajbutler@iastate.edu"
-                        date="27-4-2024"
-                        professor="Ali Jannesari"
-                        imageSrc="https://cdn.discordapp.com/attachments/1143198649736765460/1233979266513768448/andrew.JPG?ex=662f103f&is=662dbebf&hm=9095423f9e64aaa691dd8f64d36b5d3644f717e970fd0ac06cacedd850e64a85&"
-                      />
-                      <StudentCard
-                        name="Nhat Bui"
-                        email="nbui@iastate.edu"
-                        date="27-4-2024"
-                        professor="Ali Jannesari"
-                        imageSrc="https://cdn.discordapp.com/attachments/1143198649736765460/1233979265729691730/nat.jpg?ex=662f103f&is=662dbebf&hm=5d6f564d0389866e334125bad5229bb7aad1706acec9c6f1954552433b223363&"
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    //       <div className="accordion-item">
+    //         <h2 className="accordion-header" id="headingFour">
+    //           <button
+    //             className="accordion-button"
+    //             type="button"
+    //             onClick={() => toggleCollapse(4)}
+    //             aria-expanded={openItem === 4 ? "true" : "false"}
+    //             aria-controls="collapseFour"
+    //           >
+    //             <strong>D</strong>elete: Remove a song from the Database
+    //           </button>
+    //         </h2>
+    //         <div
+    //           id="collapseFour"
+    //           className={`accordion-collapse collapse ${
+    //             openItem === 4 ? "show" : ""
+    //           }`}
+    //           aria-labelledby="headingFour"
+    //         >
+    //           <div className="accordion-body">
+    //             <DeleteSong />
+    //           </div>
+    //         </div>
+    //       </div>
+
+    //       <div className="accordion-item">
+    //         <h2 className="accordion-header" id="headingFive">
+    //           <button
+    //             className="accordion-button"
+    //             type="button"
+    //             onClick={() => toggleCollapse(5)}
+    //             aria-expanded={openItem === 5 ? "true" : "false"}
+    //             aria-controls="collapseFive"
+    //           >
+    //             About: Student info
+    //           </button>
+    //         </h2>
+    //         <div
+    //           id="collapseFive"
+    //           className={`accordion-collapse collapse ${
+    //             openItem === 5 ? "show" : ""
+    //           }`}
+    //           aria-labelledby="headingFive"
+    //         >
+    //           <div className="accordion-body">
+    //             <div className="album py-5">
+    //               <div className="container">
+    //                 <h3>Com S 319: Construction of User Interfaces, Team 71</h3>
+    //                 <h4>Final Project (Work in Progress)</h4>
+    //                 <p>
+    //                   Are we done yet? I want to go back to scripting and OOP
+    //                   and algorithms and such
+    //                 </p>
+    //                 <div className="row row-cols-1 row-cols-sm-2 g-3">
+    //                   <StudentCard
+    //                     name="Andrew Butler"
+    //                     email="ajbutler@iastate.edu"
+    //                     date="27-4-2024"
+    //                     professor="Ali Jannesari"
+    //                     imageSrc="https://cdn.discordapp.com/attachments/1143198649736765460/1233979266513768448/andrew.JPG?ex=662f103f&is=662dbebf&hm=9095423f9e64aaa691dd8f64d36b5d3644f717e970fd0ac06cacedd850e64a85&"
+    //                   />
+    //                   <StudentCard
+    //                     name="Nhat Bui"
+    //                     email="nbui@iastate.edu"
+    //                     date="27-4-2024"
+    //                     professor="Ali Jannesari"
+    //                     imageSrc="https://cdn.discordapp.com/attachments/1143198649736765460/1233979265729691730/nat.jpg?ex=662f103f&is=662dbebf&hm=5d6f564d0389866e334125bad5229bb7aad1706acec9c6f1954552433b223363&"
+    //                   />
+    //                 </div>
+    //               </div>
+    //             </div>
+    //           </div>
+    //         </div>
+    //       </div>
+    //     </div>
+    //   </div>
+    // </div>
   );
 };
 
