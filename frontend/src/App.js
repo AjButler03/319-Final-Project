@@ -412,30 +412,6 @@ const DeleteSong = () => {
   );
 };
 
-const Header = () =>{
-  return (
-    <header className="p-3 bg-dark text-white">
-    <div className="container">
-      <div className="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-        <div className="d-flex align-items-center mb-2 mb-lg-0 text-white">
-          {/* Your logo or site name */}
-        </div>
-
-        <ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-          <li><button className="btn btn-link nav-link px-2 text-white" >Home</button></li>
-
-          <li><button className="btn btn-link nav-link px-2 text-white" >History</button></li>
-          <li><button className="btn btn-link nav-link px-2 text-white" >Edit Songs</button></li>
-        </ul>
-      </div>
-    </div>
-    
-
-
-  </header>
-  );
-}
-
 const FilterBar = ({ filterSongs }) => {
   const filterTags = [
     "All",
@@ -468,7 +444,7 @@ const FilterBar = ({ filterSongs }) => {
             </button>
           </React.Fragment>
         ))}
-        <div className="vr vr-blurry"/>
+        <div className="vr vr-blurry" />
       </div>
     </div>
   );
@@ -476,6 +452,8 @@ const FilterBar = ({ filterSongs }) => {
 
 const App = () => {
   const [openItem, setOpenItem] = useState(null);
+
+  const [viewer, setViewer] = useState('all');
 
   const toggleCollapse = (item) => {
     setOpenItem(openItem === item ? null : item);
@@ -551,9 +529,158 @@ const App = () => {
     );
   };
 
+
+  const Header = () => {
+    return (
+      <header className="p-3 bg-dark text-white">
+        <div className="container">
+          <div className="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+            <div className="d-flex align-items-center mb-2 mb-lg-0 text-white">
+              {/* Your logo or site name */}
+            </div>
+
+            <ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+              <li><button className="btn btn-link px-2 text-white" onClick={() => setViewer('all')}>Home</button></li>
+              <li><button className="btn btn-link px-2 text-white" onClick={() => setViewer('genres')}>By Genres</button></li>
+              <li><button className="btn btn-link px-2 text-white" onClick={() => setViewer('edit')}>Edit Songs</button></li>
+              <li><button className="btn btn-link px-2 text-white" onClick={() => setViewer('about')}>About</button></li>
+            </ul>
+          </div>
+        </div>
+
+
+
+      </header>
+    );
+  }
+
+  const Accordion = () => {
+    return (
+      <div className="accordion" id="accordionExample">
+        <div className="accordion-item">
+          <h2 className="accordion-header" id="headingOne">
+            <button
+              className="accordion-button"
+              type="button"
+              onClick={() => toggleCollapse(1)}
+              aria-expanded={openItem === 1 ? "true" : "false"}
+              aria-controls="collapseOne"
+            >
+              <strong>C</strong>reate: Add item to Database
+            </button>
+          </h2>
+          <div
+            id="collapseOne"
+            className={`accordion-collapse collapse ${openItem === 1 ? "show" : ""
+              }`}
+            aria-labelledby="headingOne"
+          >
+            <div className="accordion-body">
+              <ItemForm />
+            </div>
+          </div>
+        </div>
+
+        <div className="accordion-item">
+          <h2 className="accordion-header" id="headingThree">
+            <button
+              className="accordion-button"
+              type="button"
+              onClick={() => toggleCollapse(2)}
+              aria-expanded={openItem === 2 ? "true" : "false"}
+              aria-controls="collapseThree"
+            >
+              <strong>U</strong>pdate: Modify information about a song
+            </button>
+          </h2>
+          <div
+            id="collapseThree"
+            className={`accordion-collapse collapse ${openItem === 2 ? "show" : ""
+              }`}
+            aria-labelledby="headingThree"
+          >
+            <div className="accordion-body">
+              <UpdateForm />
+            </div>
+          </div>
+        </div>
+
+        <div className="accordion-item">
+          <h2 className="accordion-header" id="headingFour">
+            <button
+              className="accordion-button"
+              type="button"
+              onClick={() => toggleCollapse(3)}
+              aria-expanded={openItem === 3 ? "true" : "false"}
+              aria-controls="collapseFour"
+            >
+              <strong>D</strong>elete: Remove a song from the Database
+            </button>
+          </h2>
+          <div
+            id="collapseFour"
+            className={`accordion-collapse collapse ${openItem === 3 ? "show" : ""
+              }`}
+            aria-labelledby="headingFour"
+          >
+            <div className="accordion-body">
+              <DeleteSong />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+
   return (
 
-    <div><Header/></div>
+    <div>
+      <Header />
+      {viewer === 'all' && (
+        <div>
+          <p>nothing all</p>
+        </div>
+      )}
+      {viewer === 'genres' && (
+        <div>
+          <p>nothing genres</p>
+        </div>
+      )}
+      {viewer === 'edit' && (
+        <div>
+          <Accordion />
+        </div>
+      )}
+      {viewer === 'about' && (
+        <div>
+          <div className="album py-5">
+            <div className="container">
+              <h3>Com S 319: Construction of User Interfaces, Team 71</h3>
+              <h4>Final Project</h4>
+              <div className="row row-cols-1 row-cols-sm-2 g-3">
+                <StudentCard
+                  name="Andrew Butler"
+                  email="ajbutler@iastate.edu"
+                  date="27-4-2024"
+                  professor="Ali Jannesari"
+                  imageSrc="https://raw.githubusercontent.com/AjButler03/CS319-Assign-01/main/personal%20images/andrew.JPG"
+                />
+                <StudentCard
+                  name="Nhat Bui"
+                  email="nbui@iastate.edu"
+                  date="27-4-2024"
+                  professor="Ali Jannesari"
+                  imageSrc="https://raw.githubusercontent.com/AjButler03/CS319-Assign-01/main/personal%20images/nat.jpg"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+  )
+}
+
+    </div >
     // <div style={{ height: "100vh", display: "flex", flexDirection: "column" }}>
     //   <div style={{ flex: 1 }}>
     //     <div className="accordion" id="accordionExample">
